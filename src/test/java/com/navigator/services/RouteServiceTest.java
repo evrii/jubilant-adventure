@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.navigator.entities.Route;
@@ -98,7 +99,7 @@ public class RouteServiceTest {
 
     
     @Test
-    void convertJsonObjectToRoute() throws JSONException{
+    void testConvertJsonObjectToRoute() throws JSONException{
         JSONObject jsonRoute = responsesJson.getJSONArray("data").getJSONObject(0);
         Route outputRoute = routeService.convertJsonObjectToRoute(jsonRoute);
         assertEquals(outputRoute.getId(),"Purple");
@@ -130,5 +131,15 @@ public class RouteServiceTest {
         assertEquals(routes.get(2).getId(),"Olive");
         assertEquals(routes.get(2).getLongName(),"Olive Line");
     }
-    
+
+    @Test
+    void testGetRouteInventory(){
+        List<Route> routes = new ArrayList<Route>();
+        routes.add(new Route("Red", "Red Line"));
+        routes.add(new Route("Blue", "Blue Line"));
+        routes.add(new Route("Yellow", "Yellow Line"));
+        String routeInventory = routeService.getRouteInventory(routes);
+        String expectedRouteInventory = "Routes:\nRed Line\nBlue Line\nYellow Line";
+        assertEquals(routeInventory,expectedRouteInventory);
+    }
 }
