@@ -23,8 +23,9 @@ public class StopService {
         restTemplate.setUriTemplateHandler(new DefaultUriBuilderFactory("https://api-v3.mbta.com"));
     }
 
-    public List<Stop> getStops(){
-		String body = restTemplate.getForObject("/stops?filter[route_type]=0,1&fields[stop]=name", String.class);
+    public List<Stop> getStops(String routeId){
+        String url = String.format("/stops?filter[route]=%s&fields[stop]=name", routeId);
+		String body = restTemplate.getForObject(url, String.class);
         JSONObject json = new JSONObject(body);
         JSONArray jsonStops = json.getJSONArray("data");
 
@@ -47,11 +48,12 @@ public class StopService {
 
     public Stop convertJsonObjectToStop(JSONObject jsonStop){
         String id;
-        String longName;
+        String name;
 
         id = jsonStop.getString("id");
-        longName = jsonStop.getJSONObject("attributes").getString("name");
-        return new Stop(id, longName);
+        name = jsonStop.getJSONObject("attributes").getString("name");
+
+        return new Stop(id, name);
     }
 
 }

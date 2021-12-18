@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.navigator.entities.Route;
+import com.navigator.entities.Stop;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +19,8 @@ public class RouteService {
     RestTemplate restTemplate;
     HttpEntity <String> entity;
 
+    @Autowired
+    StopService stopService;
 
     public RouteService(){
 		restTemplate = new RestTemplate();
@@ -29,9 +33,9 @@ public class RouteService {
         JSONArray jsonRoutes = json.getJSONArray("data");
 
         List<Route> routes = convertJsonArrayToRouteList(jsonRoutes);
+        populateStopsForRoutes(routes);
 
         return routes;
-
     }
 
     public List<Route> convertJsonArrayToRouteList(JSONArray jsonRouteArray){
@@ -54,4 +58,11 @@ public class RouteService {
         return new Route(id, longName);
     }
 
+    private void populateStopsForRoutes(List<Route> routes){
+        for (Route route : routes) {
+            System.out.println(route.getLongName());
+            List<Stop> routeStops = stopService.getStops(route.getId());
+            route.setStops(routeStops);
+        }
+    }
 }

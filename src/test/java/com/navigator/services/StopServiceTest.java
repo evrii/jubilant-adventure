@@ -108,7 +108,7 @@ public class StopServiceTest {
     @Test
     void testThatGetStopsReturnsTheCorrectListOfStops(){
         when(restTemplate.getForObject(anyString(), any())).thenReturn(stopsJsonString);
-        List<Stop> stops = stopService.getStops();
+        List<Stop> stops = stopService.getStops("Olive");
         assertEquals(stops.size(),4);
         assertEquals(stops.get(0).getId(),"123");
         assertEquals(stops.get(0).getName(),"First Stop");

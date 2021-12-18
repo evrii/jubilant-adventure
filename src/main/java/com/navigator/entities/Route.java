@@ -24,4 +24,8 @@ public class Route{
     public List<Stop> getStops(){
         return this.stops;
     }
+
+    public void setStops(List<Stop> stops){
+        this.stops = stops;
+    }
 }

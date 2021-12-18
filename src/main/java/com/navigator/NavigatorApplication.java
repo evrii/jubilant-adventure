@@ -1,5 +1,8 @@
 package com.navigator;
 
+import java.util.List;
+
+import com.navigator.entities.Route;
 import com.navigator.services.RouteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,7 @@ public class NavigatorApplication {
 
 	@GetMapping("/info")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		routeService.getRoutes();
+		List<Route> routes = routeService.getRoutes();
 		return String.format("Hello %s!", "body");
 	}
 }
