@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
-import com.navigator.entities.Route;
+import com.navigator.entities.Stop;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,16 +84,16 @@ public class StopServiceTest {
     
     @Test
     void convertJsonObjectToStop() throws JSONException{
-        JSONObject jsonRoute = responsesJson.getJSONArray("data").getJSONObject(0);
-        Route outputRoute = stopService.convertJsonObjectToRoute(jsonRoute);
-        assertEquals(outputRoute.getId(),"123");
-        assertEquals(outputRoute.getName(),"First Stop");
+        JSONObject jsonStop = responsesJson.getJSONArray("data").getJSONObject(0);
+        Stop outputStop = stopService.convertJsonObjectToStop(jsonStop);
+        assertEquals(outputStop.getId(),"123");
+        assertEquals(outputStop.getName(),"First Stop");
     }
 
     @Test
-    void testConvertJsonArrayToRouteList() throws JSONException{
+    void testConvertJsonArrayToStopList() throws JSONException{
         JSONArray stopsJSONArray = responsesJson.getJSONArray("data");
-        List<Route> stops = stopService.convertJsonArrayToRouteList(stopsJSONArray);
+        List<Stop> stops = stopService.convertJsonArrayToStopList(stopsJSONArray);
         assertEquals(stops.size(),4);
         assertEquals(stops.get(0).getId(),"123");
         assertEquals(stops.get(0).getName(),"First Stop");
@@ -106,9 +106,9 @@ public class StopServiceTest {
     }
 
     @Test
-    void testThatGetRoutesReturnsTheCorrectListOfRoutes(){
+    void testThatGetStopsReturnsTheCorrectListOfStops(){
         when(restTemplate.getForObject(anyString(), any())).thenReturn(stopsJsonString);
-        List<Route> stops = stopService.getRoutes();
+        List<Stop> stops = stopService.getStops();
         assertEquals(stops.size(),4);
         assertEquals(stops.get(0).getId(),"123");
         assertEquals(stops.get(0).getName(),"First Stop");
