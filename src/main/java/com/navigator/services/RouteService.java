@@ -1,7 +1,6 @@
 package com.navigator.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -218,11 +217,10 @@ public class RouteService {
         HashSet<Route> routesContainingEndingStop = getRoutesContainingStop(routes, endingStopName);
         if(routesContainingStartingStop.size()>0 && routesContainingEndingStop.size()>0){
 
-            
             HashSet<Route> commoRoutes = new HashSet<Route>(routesContainingStartingStop);
             commoRoutes.retainAll(routesContainingEndingStop);
 
-            //IF the stops are on the same path, set path to that single route, otherwise search recursively (getPath) for a connection.
+            //If the stops are on the same path, set path to that single route, otherwise search recursively (getPath) for a connection.
             if(commoRoutes.size() > 0){
                 path.add(commoRoutes.iterator().next());
             } else{
