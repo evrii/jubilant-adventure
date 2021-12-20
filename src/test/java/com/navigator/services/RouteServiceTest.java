@@ -175,6 +175,8 @@ public class RouteServiceTest {
 
         String expectedFewestStops = "<b>Fewest Stops</b><br/>2 stops - Blue Line";
         String actualFewestStops = routeService.getFewestStops(routes);
+
+        assertEquals(expectedFewestStops, actualFewestStops);
     }
 
     @Test
@@ -205,8 +207,10 @@ public class RouteServiceTest {
         routes.add(blueRoute);
         routes.add(yellowRoute);
 
-        String expectedFewestStops = "<b>Most Stops</b><br/>3 stops - Red Line, Yellow";
-        String actualFewestStops = routeService.getMostStops(routes);
+        String expectedMostStops = "<b>Most Stops</b><br/>3 stops - Red Line, Yellow";
+        String actualMostStops = routeService.getMostStops(routes);
+
+        assertEquals(expectedMostStops, actualMostStops);
     }
 
     @Test
@@ -237,7 +241,9 @@ public class RouteServiceTest {
         routes.add(blueRoute);
         routes.add(yellowRoute);
 
-        String expectedFewestStops = "<b>Stops connectiong two or more routes</b><br/>Third Stop - Blue Line, Red Line, Yellow Line<br/>Fourth Stop - Blue Line, Yellow Line";
-        String actualFewestStops = routeService.getIntersection(routes);
+        String expectedIntersections = "<b>Stops connectiong two or more routes</b><br/>Third Stop - Blue Line, Red Line, Yellow Line<br/>Fourth Stop - Blue Line, Yellow Line";
+        String actualIntersections = routeService.getIntersections(routes);
+
+        assertEquals(expectedIntersections, actualIntersections);
     }
 }
