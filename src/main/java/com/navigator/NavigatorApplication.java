@@ -41,7 +41,7 @@ public class NavigatorApplication {
 	public String questionTwo() {
 		String leastStops = routeService.getFewestStops(routes);
 		String mostStops = routeService.getMostStops(routes);
-		String intersections = routeService.getIntersections(routes);
+		String intersections = routeService.getStopsWithMultipleRoutes(routes);
 		return String.format("%s<br/><br/>%s<br/><br/>%s",leastStops,mostStops,intersections);
 	}
 }

@@ -110,7 +110,7 @@ public class RouteService {
         return String.format("<b>Most Stops</b><br/>%d stops - %s", mostStops, biggestRoutes);
     }
 
-    public String getIntersections(List<Route> routes){
+    public String getStopsWithMultipleRoutes(List<Route> routes){
         HashMap<Stop,List<Route>> stopIntersections = new HashMap<Stop,List<Route>>();
         String output = "";
         for (Route currentRoute : routes) {
@@ -144,6 +144,24 @@ public class RouteService {
 
         
         return String.format("<b>Stops connectiong two or more routes:</b><br/>%s", output);
+    }
+
+    public HashSet<Route> getIntersectingRoutes(List<Route> routes, Route currentRoute, HashSet<Route> excludedRoutes){
+        HashSet<Route> intersectingRoutes = new HashSet<Route>();
+        for (Route route : routes) {
+            if(!route.equals(currentRoute) && !excludedRoutes.contains(route)){
+                HashSet<Stop> intersectingStops = new HashSet<Stop>(route.getStops());
+                intersectingStops.retainAll(currentRoute.getStops());
+                if(intersectingStops.size()>0){
+                    intersectingRoutes.add(route);
+                }
+            }
+        }
+
+        return intersectingRoutes;
+    }
+    public String getItinerary(List<Route> routes, String startingStop, String endingStop){
+        return "";
     }
 
     private void populateStopsForRoutes(List<Route> routes){

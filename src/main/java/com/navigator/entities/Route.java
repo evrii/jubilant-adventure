@@ -28,4 +28,13 @@ public class Route{
     public void setStops(Set<Stop> stops){
         this.stops = stops;
     }
+
+    @Override
+    public boolean equals(Object otherObject){
+        if(otherObject == null || this.getClass() != otherObject.getClass()){
+            return false;
+        }
+        Route otherRoute = (Route) otherObject;
+        return this.id.equals(otherRoute.getId()) && this.longName.equals(otherRoute.getLongName());
+    }
 }
