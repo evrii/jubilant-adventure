@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
@@ -42,6 +41,9 @@ public class NavigatorApplication {
 
 	@GetMapping("/2")
 	public String questionTwo() {
-		return "How about this?";
+		String leastStops = routeService.getFewestStops(routes);
+		String mostStops = routeService.getMostStops(routes);
+		String intersections = routeService.getIntersections(routes);
+		return String.format("%s<br/><br/>%s<br/><br/>%s",leastStops,mostStops,intersections);
 	}
 }

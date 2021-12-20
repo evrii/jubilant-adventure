@@ -20,4 +20,13 @@ public class Stop{
     public int hashCode(){
         return this.id.hashCode();
     }
+
+    @Override
+    public boolean equals(Object otherObject){
+        if(otherObject == null || this.getClass() != otherObject.getClass()){
+            return false;
+        }
+        Stop otherStop = (Stop) otherObject;
+        return this.id.equals(otherStop.getId()) && this.name.equals(otherStop.getName());
+    }
 }
