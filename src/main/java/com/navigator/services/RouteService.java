@@ -166,7 +166,7 @@ public class RouteService {
         for (Route currentRoute : routes) {
             Set<Stop> currentStops = currentRoute.getStops();
             for (Stop currentStop : currentStops) {
-                if(currentStop.getName().equals(stopName)){
+                if(currentStop.getName().toUpperCase().contains(stopName.toUpperCase())){
                     routesContainingStop.add(currentRoute);
                 }
             }
