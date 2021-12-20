@@ -24,8 +24,6 @@ public class NavigatorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NavigatorApplication.class, args);
-		
-		
 	}
 
 	@PostConstruct

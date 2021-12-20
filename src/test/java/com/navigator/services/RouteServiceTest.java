@@ -240,4 +240,68 @@ public class RouteServiceTest {
 
         assertEquals(expectedIntersections, actualIntersections);
     }
+
+    @Test
+    void testGetSimpleItinerary(){
+        List<Route> routes = new ArrayList<Route>();
+        Route redRoute = new Route("Red", "Red Line");
+        Route blueRoute = new Route("Blue", "Blue Line");
+        Route yellowRoute = new Route("Yellow", "Yellow Line");
+
+        Stop first = new Stop("1","First Stop");
+        Stop second = new Stop("2","Second Stop");
+        Stop third = new Stop("3","Third Stop");
+        Stop fourth = new Stop("4","Fourth Stop");
+        Stop fifth = new Stop("5","Fifth Stop");
+        Stop sixth = new Stop("6","Sixth Stop");
+
+        List<Stop> redStops = Arrays.asList(first,second,third);
+        List<Stop> blueStops = Arrays.asList(third,fourth);
+        List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
+
+        redRoute.setStops(redStops);
+        blueRoute.setStops(blueStops);
+        yellowRoute.setStops(yellowStops);
+
+        routes.add(redRoute);
+        routes.add(blueRoute);
+        routes.add(yellowRoute);
+
+        String expectedItinerary = "First Stop to Third Stop -> Red Line";
+        String actualItinerary = routeService.getItinerary(routes, "First Stop", "Third Stop");
+
+        assertEquals(expectedItinerary, actualItinerary);
+    }
+
+    @Test
+    void testGetComplicatedItinerary(){
+        List<Route> routes = new ArrayList<Route>();
+        Route redRoute = new Route("Red", "Red Line");
+        Route blueRoute = new Route("Blue", "Blue Line");
+        Route yellowRoute = new Route("Yellow", "Yellow Line");
+
+        Stop first = new Stop("1","First Stop");
+        Stop second = new Stop("2","Second Stop");
+        Stop third = new Stop("3","Third Stop");
+        Stop fourth = new Stop("4","Fourth Stop");
+        Stop fifth = new Stop("5","Fifth Stop");
+        Stop sixth = new Stop("6","Sixth Stop");
+
+        List<Stop> redStops = Arrays.asList(first,second,third);
+        List<Stop> blueStops = Arrays.asList(third,fourth);
+        List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
+
+        redRoute.setStops(redStops);
+        blueRoute.setStops(blueStops);
+        yellowRoute.setStops(yellowStops);
+
+        routes.add(redRoute);
+        routes.add(blueRoute);
+        routes.add(yellowRoute);
+
+        String expectedItinerary = "First Stop to Sixth Stop -> Red Line, Blue Line, Yellow Line";
+        String actualItinerary = routeService.getItinerary(routes, "First Stop", "Sixth Stop");
+
+        assertEquals(expectedItinerary, actualItinerary);
+    }
 }
