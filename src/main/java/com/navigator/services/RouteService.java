@@ -70,6 +70,46 @@ public class RouteService {
         return inventory;
     }
 
+    public String getFewestStops(List<Route> routes){
+        int fewestStops = Integer.MAX_VALUE;
+        String smallestRoutes = "";
+
+        for (Route route : routes) {
+            int routeStops = route.getStops().size();
+
+            if(routeStops < fewestStops){
+                fewestStops = routeStops;
+                smallestRoutes = route.getLongName();
+            } else if(routeStops == fewestStops){
+                smallestRoutes += ", " + route.getLongName(); 
+            }
+        }
+
+        return String.format("<b>Fewest Stops</b><br/>%d stops - %s", fewestStops, smallestRoutes);
+    }
+
+    public String getMostStops(List<Route> routes){
+        int mostStops = Integer.MIN_VALUE;
+        String biggestRoutes = "";
+
+        for (Route route : routes) {
+            int routeStops = route.getStops().size();
+
+            if(routeStops > mostStops){
+                mostStops = routeStops;
+                biggestRoutes = route.getLongName();
+            } else if(routeStops == mostStops){
+                biggestRoutes += ", " + route.getLongName(); 
+            }
+        }
+
+        return String.format("<b>Most Stops</b><br/>%d stops - %s", mostStops, biggestRoutes);
+    }
+
+    public String getIntersections(List<Route> routes){
+        return "";
+    }
+
     private void populateStopsForRoutes(List<Route> routes){
         for (Route route : routes) {
             List<Stop> routeStops = stopService.getStops(route.getId());

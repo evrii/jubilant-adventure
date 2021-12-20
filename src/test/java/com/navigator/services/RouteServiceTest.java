@@ -207,7 +207,7 @@ public class RouteServiceTest {
         routes.add(blueRoute);
         routes.add(yellowRoute);
 
-        String expectedMostStops = "<b>Most Stops</b><br/>3 stops - Red Line, Yellow";
+        String expectedMostStops = "<b>Most Stops</b><br/>3 stops - Red Line, Yellow Line";
         String actualMostStops = routeService.getMostStops(routes);
 
         assertEquals(expectedMostStops, actualMostStops);
