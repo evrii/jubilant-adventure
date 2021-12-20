@@ -124,19 +124,6 @@ public class RouteServiceTest {
         assertEquals(routes.get(2).getLongName(),"Olive Line");
     }
 
-    // @Test
-    // void testThatGetRoutesReturnsTheCorrectListOfRoutes(){
-    //     when(restTemplate.getForObject(anyString(), any())).thenReturn(routesJsonString);
-    //     List<Route> routes = routeService.getRoutes();
-    //     assertEquals(routes.size(),3);
-    //     assertEquals(routes.get(0).getId(),"Purple");
-    //     assertEquals(routes.get(0).getLongName(),"Purple Line");
-    //     assertEquals(routes.get(1).getId(),"Pink");
-    //     assertEquals(routes.get(1).getLongName(),"Pink Line");
-    //     assertEquals(routes.get(2).getId(),"Olive");
-    //     assertEquals(routes.get(2).getLongName(),"Olive Line");
-    // }
-
     @Test
     void testGetRouteInventory(){
         List<Route> routes = new ArrayList<Route>();
