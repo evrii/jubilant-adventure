@@ -36,6 +36,7 @@ After cloning the code locally, run the following command from the root of the p
 Must have Java 11 and Maven installed.
 
 ## Potential Improvements
+- Clean up data structures to more efficiently search for membership and intersections.
 - Error Handling
 - Additional Testing
 - Efficiency of path finding.
