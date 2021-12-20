@@ -114,7 +114,7 @@ public class RouteService {
         HashMap<Stop,List<Route>> stopIntersections = new HashMap<Stop,List<Route>>();
         String output = "";
         for (Route currentRoute : routes) {
-            List<Stop> currentStops = currentRoute.getStops();
+            List<Stop> currentStops = new ArrayList<Stop>(currentRoute.getStops());
             for(Stop currentStop : currentStops){
                 if(stopIntersections.containsKey(currentStop)){
                     stopIntersections.get(currentStop).add(currentRoute);
@@ -148,7 +148,7 @@ public class RouteService {
 
     private void populateStopsForRoutes(List<Route> routes){
         for (Route route : routes) {
-            List<Stop> routeStops = stopService.getStops(route.getId());
+            HashSet<Stop> routeStops = new HashSet<Stop>(stopService.getStops(route.getId()));
             route.setStops(routeStops);
         }
     }
