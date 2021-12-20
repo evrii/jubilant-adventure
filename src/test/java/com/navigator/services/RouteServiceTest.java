@@ -159,7 +159,6 @@ public class RouteServiceTest {
         Stop fifth = new Stop("5","Fifth");
         Stop sixth = new Stop("6","Sixth");
 
-
         List<Stop> redStops = Arrays.asList(first,second,third);
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
@@ -167,7 +166,6 @@ public class RouteServiceTest {
         redRoute.setStops(redStops);
         blueRoute.setStops(blueStops);
         yellowRoute.setStops(yellowStops);
-
 
         routes.add(redRoute);
         routes.add(blueRoute);
@@ -193,7 +191,6 @@ public class RouteServiceTest {
         Stop fifth = new Stop("5","Fifth");
         Stop sixth = new Stop("6","Sixth");
 
-
         List<Stop> redStops = Arrays.asList(first,second,third);
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
@@ -201,7 +198,6 @@ public class RouteServiceTest {
         redRoute.setStops(redStops);
         blueRoute.setStops(blueStops);
         yellowRoute.setStops(yellowStops);
-
 
         routes.add(redRoute);
         routes.add(blueRoute);
@@ -227,7 +223,6 @@ public class RouteServiceTest {
         Stop fifth = new Stop("5","Fifth Stop");
         Stop sixth = new Stop("6","Sixth Stop");
 
-
         List<Stop> redStops = Arrays.asList(first,second,third);
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(third, fourth, fifth, sixth);
@@ -236,12 +231,11 @@ public class RouteServiceTest {
         blueRoute.setStops(blueStops);
         yellowRoute.setStops(yellowStops);
 
-
         routes.add(redRoute);
         routes.add(blueRoute);
         routes.add(yellowRoute);
 
-        String expectedIntersections = "<b>Stops connectiong two or more routes</b><br/>Third Stop - Blue Line, Red Line, Yellow Line<br/>Fourth Stop - Blue Line, Yellow Line";
+        String expectedIntersections = "<b>Stops connectiong two or more routes:</b><br/>Third Stop - Red Line, Blue Line, Yellow Line<br/>Fourth Stop - Blue Line, Yellow Line<br/>";
         String actualIntersections = routeService.getIntersections(routes);
 
         assertEquals(expectedIntersections, actualIntersections);

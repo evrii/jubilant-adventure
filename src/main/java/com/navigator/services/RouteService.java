@@ -1,7 +1,11 @@
 package com.navigator.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.navigator.entities.Route;
 import com.navigator.entities.Stop;
@@ -107,7 +111,39 @@ public class RouteService {
     }
 
     public String getIntersections(List<Route> routes){
-        return "";
+        HashMap<Stop,List<Route>> stopIntersections = new HashMap<Stop,List<Route>>();
+        String output = "";
+        for (Route currentRoute : routes) {
+            List<Stop> currentStops = currentRoute.getStops();
+            for(Stop currentStop : currentStops){
+                if(stopIntersections.containsKey(currentStop)){
+                    stopIntersections.get(currentStop).add(currentRoute);
+                } else{
+                    ArrayList<Route> stopRoutes = new ArrayList<Route>();
+                    stopRoutes.add(currentRoute);
+                    stopIntersections.put(currentStop, stopRoutes);
+                }
+            }
+        }
+
+        Set<Stop> stops = stopIntersections.keySet();
+        for (Stop currentStop : stops) {
+            List<Route> intersectingRoutes = stopIntersections.get(currentStop);
+            if(intersectingRoutes.size() > 1){
+                output += currentStop.getName() + " - ";
+                for (int routeIndex = 0; routeIndex < intersectingRoutes.size(); routeIndex++) {
+                    Route currentRoute = intersectingRoutes.get(routeIndex);
+                    output += currentRoute.getLongName();
+                    if(routeIndex < intersectingRoutes.size() -1){
+                        output += ", ";
+                    }
+                }
+                output += "<br/>";
+            }
+        }
+
+        
+        return String.format("<b>Stops connectiong two or more routes:</b><br/>%s", output);
     }
 
     private void populateStopsForRoutes(List<Route> routes){

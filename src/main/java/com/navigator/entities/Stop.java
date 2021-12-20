@@ -15,4 +15,9 @@ public class Stop{
     public String getName(){
         return this.name;
     }
+
+    @Override
+    public int hashCode(){
+        return this.id.hashCode();
+    }
 }
