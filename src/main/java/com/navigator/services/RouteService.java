@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -175,9 +176,74 @@ public class RouteService {
         return routesContainingStop;
     }
 
+    public List<Route> getPath(List<Route> routes, Route startingRoute, Route endingRoute, List<Route> currentRoute){
+        List<Route> route = new ArrayList<Route>();
+        route.addAll(currentRoute);
+        route.add(startingRoute);
+
+        if(startingRoute.equals(endingRoute)){
+            return route;
+        } else{
+            HashSet<Stop> intersectingStops = new HashSet<Stop>(startingRoute.getStops());
+            intersectingStops.retainAll(endingRoute.getStops());
+            if(intersectingStops.size()>0){
+                route.add(endingRoute);
+                return route;
+            } else{
+                HashSet<Route> excludedRoutes = new HashSet<Route>(currentRoute);
+                excludedRoutes.add(startingRoute);
+                HashSet<Route> intersectingRoutes = getIntersectingRoutes(routes, startingRoute, excludedRoutes);
+                if(intersectingRoutes.size() == 0){
+                    return null;
+                }
+
+                Iterator<Route> intersectionRoutesIterator = intersectingRoutes.iterator();
+                boolean foundPath = false;
+
+                List<Route> proposedRoute = null;                
+                while(intersectionRoutesIterator.hasNext() && !foundPath){
+                    Route nextRoute = intersectionRoutesIterator.next();
+                    proposedRoute = getPath(routes, nextRoute, endingRoute, route);
+                    foundPath = proposedRoute != null;
+                }
+                return proposedRoute;
+
+            }
+        }
+    }
+
     public String getItinerary(List<Route> routes, String startingStopName, String endingStopName){
-        
-        return "";
+        List<Route> path = new ArrayList<Route>();
+        HashSet<Route> routesContainingStartingStop = getRoutesContainingStop(routes, startingStopName);
+        HashSet<Route> routesContainingEndingStop = getRoutesContainingStop(routes, endingStopName);
+        if(routesContainingStartingStop.size()>0 && routesContainingEndingStop.size()>0){
+
+            
+            HashSet<Route> commoRoutes = new HashSet<Route>(routesContainingStartingStop);
+            commoRoutes.retainAll(routesContainingEndingStop);
+
+            //IF the stops are on the same path, set path to that single route, otherwise search recursively (getPath) for a connection.
+            if(commoRoutes.size() > 0){
+                path.add(commoRoutes.iterator().next());
+            } else{
+                Route startingRoute = routesContainingStartingStop.iterator().next();
+                Route endingRoute = routesContainingEndingStop.iterator().next();
+                path = getPath(routes, startingRoute, endingRoute, new ArrayList<Route>());
+            }
+
+        }
+
+        String pathString = "";
+
+        for (int pathIndex = 0; pathIndex < path.size(); pathIndex++) {
+            Route currentRoute = path.get(pathIndex);
+            pathString += currentRoute.getLongName();
+            if(pathIndex < path.size()-1){
+                pathString += ", ";
+            }
+        }
+
+        return String.format("%s to %s -> %s", startingStopName, endingStopName, pathString);
     }
 
     private void populateStopsForRoutes(List<Route> routes){
