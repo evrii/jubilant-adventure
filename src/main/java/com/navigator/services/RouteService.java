@@ -160,7 +160,23 @@ public class RouteService {
 
         return intersectingRoutes;
     }
-    public String getItinerary(List<Route> routes, String startingStop, String endingStop){
+
+    public HashSet<Route> getRoutesContainingStop(List<Route> routes, String stopName){
+        HashSet<Route> routesContainingStop = new HashSet<Route>();
+        for (Route currentRoute : routes) {
+            Set<Stop> currentStops = currentRoute.getStops();
+            for (Stop currentStop : currentStops) {
+                if(currentStop.getName().equals(stopName)){
+                    routesContainingStop.add(currentRoute);
+                }
+            }
+        }
+
+        return routesContainingStop;
+    }
+
+    public String getItinerary(List<Route> routes, String startingStopName, String endingStopName){
+        
         return "";
     }
 
