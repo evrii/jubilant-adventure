@@ -278,6 +278,39 @@ public class RouteServiceTest {
     }
 
     @Test
+    void testRoutesContainingStop(){
+        List<Route> routes = new ArrayList<Route>();
+        Route redRoute = new Route("Red", "Red Line");
+        Route blueRoute = new Route("Blue", "Blue Line");
+        Route yellowRoute = new Route("Yellow", "Yellow Line");
+
+        Stop first = new Stop("1","First Stop");
+        Stop second = new Stop("2","Second Stop");
+        Stop third = new Stop("3","Third Stop");
+        Stop fourth = new Stop("4","Fourth Stop");
+        Stop fifth = new Stop("5","Fifth Stop");
+        Stop sixth = new Stop("6","Sixth Stop");
+
+        List<Stop> redStops = Arrays.asList(first,second,third);
+        List<Stop> blueStops = Arrays.asList(third,fourth);
+        List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
+
+        redRoute.setStops(new HashSet<Stop>(redStops));
+        blueRoute.setStops(new HashSet<Stop>(blueStops));
+        yellowRoute.setStops(new HashSet<Stop>(yellowStops));
+
+        routes.add(redRoute);
+        routes.add(blueRoute);
+        routes.add(yellowRoute);
+
+        HashSet<Route> routesContainingStop = routeService.getRoutesContainingStop(routes, "Third Stop");
+
+        assertTrue(routesContainingStop.contains(redRoute));
+        assertTrue(routesContainingStop.contains(blueRoute));
+        assertFalse(routesContainingStop.contains(yellowRoute));
+    }
+
+    @Test
     void testGetSimpleItinerary(){
         List<Route> routes = new ArrayList<Route>();
         Route redRoute = new Route("Red", "Red Line");
