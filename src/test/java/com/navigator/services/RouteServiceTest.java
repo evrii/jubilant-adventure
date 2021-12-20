@@ -5,9 +5,12 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import com.navigator.entities.Route;
@@ -163,9 +166,9 @@ public class RouteServiceTest {
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
 
-        redRoute.setStops(redStops);
-        blueRoute.setStops(blueStops);
-        yellowRoute.setStops(yellowStops);
+        redRoute.setStops(new HashSet<Stop>(redStops));
+        blueRoute.setStops(new HashSet<Stop>(blueStops));
+        yellowRoute.setStops(new HashSet<Stop>(yellowStops));
 
         routes.add(redRoute);
         routes.add(blueRoute);
@@ -195,9 +198,9 @@ public class RouteServiceTest {
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
 
-        redRoute.setStops(redStops);
-        blueRoute.setStops(blueStops);
-        yellowRoute.setStops(yellowStops);
+        redRoute.setStops(new HashSet<Stop>(redStops));
+        blueRoute.setStops(new HashSet<Stop>(blueStops));
+        yellowRoute.setStops(new HashSet<Stop>(yellowStops));
 
         routes.add(redRoute);
         routes.add(blueRoute);
@@ -210,7 +213,7 @@ public class RouteServiceTest {
     }
 
     @Test
-    void testGetIntersections(){
+    void testGetStopsWithMultipleRoutes(){
         List<Route> routes = new ArrayList<Route>();
         Route redRoute = new Route("Red", "Red Line");
         Route blueRoute = new Route("Blue", "Blue Line");
@@ -227,18 +230,51 @@ public class RouteServiceTest {
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(third, fourth, fifth, sixth);
 
-        redRoute.setStops(redStops);
-        blueRoute.setStops(blueStops);
-        yellowRoute.setStops(yellowStops);
+        redRoute.setStops(new HashSet<Stop>(redStops));
+        blueRoute.setStops(new HashSet<Stop>(blueStops));
+        yellowRoute.setStops(new HashSet<Stop>(yellowStops));
 
         routes.add(redRoute);
         routes.add(blueRoute);
         routes.add(yellowRoute);
 
         String expectedIntersections = "<b>Stops connectiong two or more routes:</b><br/>Third Stop - Red Line, Blue Line, Yellow Line<br/>Fourth Stop - Blue Line, Yellow Line<br/>";
-        String actualIntersections = routeService.getIntersections(routes);
+        String actualIntersections = routeService.getStopsWithMultipleRoutes(routes);
 
         assertEquals(expectedIntersections, actualIntersections);
+    }
+
+    @Test
+    void testGetIntersectingRoutes(){
+        List<Route> routes = new ArrayList<Route>();
+        Route redRoute = new Route("Red", "Red Line");
+        Route blueRoute = new Route("Blue", "Blue Line");
+        Route yellowRoute = new Route("Yellow", "Yellow Line");
+
+        Stop first = new Stop("1","First Stop");
+        Stop second = new Stop("2","Second Stop");
+        Stop third = new Stop("3","Third Stop");
+        Stop fourth = new Stop("4","Fourth Stop");
+        Stop fifth = new Stop("5","Fifth Stop");
+        Stop sixth = new Stop("6","Sixth Stop");
+
+        List<Stop> redStops = Arrays.asList(first,second,third);
+        List<Stop> blueStops = Arrays.asList(third,fourth);
+        List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
+
+        redRoute.setStops(new HashSet<Stop>(redStops));
+        blueRoute.setStops(new HashSet<Stop>(blueStops));
+        yellowRoute.setStops(new HashSet<Stop>(yellowStops));
+
+        routes.add(redRoute);
+        routes.add(blueRoute);
+        routes.add(yellowRoute);
+
+        HashSet<Route> intersectingRoutes = routeService.getIntersectingRoutes(routes, redRoute, new HashSet<Route>());
+
+        assertFalse(intersectingRoutes.contains(redRoute));
+        assertTrue(intersectingRoutes.contains(blueRoute));
+        assertFalse(intersectingRoutes.contains(yellowRoute));
     }
 
     @Test
@@ -259,9 +295,9 @@ public class RouteServiceTest {
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
 
-        redRoute.setStops(redStops);
-        blueRoute.setStops(blueStops);
-        yellowRoute.setStops(yellowStops);
+        redRoute.setStops(new HashSet<Stop>(redStops));
+        blueRoute.setStops(new HashSet<Stop>(blueStops));
+        yellowRoute.setStops(new HashSet<Stop>(yellowStops));
 
         routes.add(redRoute);
         routes.add(blueRoute);
@@ -291,9 +327,9 @@ public class RouteServiceTest {
         List<Stop> blueStops = Arrays.asList(third,fourth);
         List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
 
-        redRoute.setStops(redStops);
-        blueRoute.setStops(blueStops);
-        yellowRoute.setStops(yellowStops);
+        redRoute.setStops(new HashSet<Stop>(redStops));
+        blueRoute.setStops(new HashSet<Stop>(blueStops));
+        yellowRoute.setStops(new HashSet<Stop>(yellowStops));
 
         routes.add(redRoute);
         routes.add(blueRoute);
@@ -304,4 +340,5 @@ public class RouteServiceTest {
 
         assertEquals(expectedItinerary, actualItinerary);
     }
+
 }
