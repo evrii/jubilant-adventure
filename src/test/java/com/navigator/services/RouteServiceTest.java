@@ -7,9 +7,11 @@ import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.navigator.entities.Route;
+import com.navigator.entities.Stop;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -141,5 +143,101 @@ public class RouteServiceTest {
         String routeInventory = routeService.getRouteInventory(routes);
         String expectedRouteInventory = "<b>Routes:</b><br/>Red Line<br/>Blue Line<br/>Yellow Line";
         assertEquals(routeInventory,expectedRouteInventory);
+    }
+
+    @Test
+    void testGetFewestStops(){
+        List<Route> routes = new ArrayList<Route>();
+        Route redRoute = new Route("Red", "Red Line");
+        Route blueRoute = new Route("Blue", "Blue Line");
+        Route yellowRoute = new Route("Yellow", "Yellow Line");
+
+        Stop first = new Stop("1","First");
+        Stop second = new Stop("2","Second");
+        Stop third = new Stop("3","Third");
+        Stop fourth = new Stop("4","Fourth");
+        Stop fifth = new Stop("5","Fifth");
+        Stop sixth = new Stop("6","Sixth");
+
+
+        List<Stop> redStops = Arrays.asList(first,second,third);
+        List<Stop> blueStops = Arrays.asList(third,fourth);
+        List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
+
+        redRoute.setStops(redStops);
+        blueRoute.setStops(blueStops);
+        yellowRoute.setStops(yellowStops);
+
+
+        routes.add(redRoute);
+        routes.add(blueRoute);
+        routes.add(yellowRoute);
+
+        String expectedFewestStops = "<b>Fewest Stops</b><br/>2 stops - Blue Line";
+        String actualFewestStops = routeService.getFewestStops(routes);
+    }
+
+    @Test
+    void testGetMostStops(){
+        List<Route> routes = new ArrayList<Route>();
+        Route redRoute = new Route("Red", "Red Line");
+        Route blueRoute = new Route("Blue", "Blue Line");
+        Route yellowRoute = new Route("Yellow", "Yellow Line");
+
+        Stop first = new Stop("1","First");
+        Stop second = new Stop("2","Second");
+        Stop third = new Stop("3","Third");
+        Stop fourth = new Stop("4","Fourth");
+        Stop fifth = new Stop("5","Fifth");
+        Stop sixth = new Stop("6","Sixth");
+
+
+        List<Stop> redStops = Arrays.asList(first,second,third);
+        List<Stop> blueStops = Arrays.asList(third,fourth);
+        List<Stop> yellowStops = Arrays.asList(fourth, fifth, sixth);
+
+        redRoute.setStops(redStops);
+        blueRoute.setStops(blueStops);
+        yellowRoute.setStops(yellowStops);
+
+
+        routes.add(redRoute);
+        routes.add(blueRoute);
+        routes.add(yellowRoute);
+
+        String expectedFewestStops = "<b>Most Stops</b><br/>3 stops - Red Line, Yellow";
+        String actualFewestStops = routeService.getMostStops(routes);
+    }
+
+    @Test
+    void testGetIntersections(){
+        List<Route> routes = new ArrayList<Route>();
+        Route redRoute = new Route("Red", "Red Line");
+        Route blueRoute = new Route("Blue", "Blue Line");
+        Route yellowRoute = new Route("Yellow", "Yellow Line");
+
+        Stop first = new Stop("1","First Stop");
+        Stop second = new Stop("2","Second Stop");
+        Stop third = new Stop("3","Third Stop");
+        Stop fourth = new Stop("4","Fourth Stop");
+        Stop fifth = new Stop("5","Fifth Stop");
+        Stop sixth = new Stop("6","Sixth Stop");
+
+
+        List<Stop> redStops = Arrays.asList(first,second,third);
+        List<Stop> blueStops = Arrays.asList(third,fourth);
+        List<Stop> yellowStops = Arrays.asList(third, fourth, fifth, sixth);
+
+        redRoute.setStops(redStops);
+        blueRoute.setStops(blueStops);
+        yellowRoute.setStops(yellowStops);
+
+
+        routes.add(redRoute);
+        routes.add(blueRoute);
+        routes.add(yellowRoute);
+
+        String expectedFewestStops = "<b>Stops connectiong two or more routes</b><br/>Third Stop - Blue Line, Red Line, Yellow Line<br/>Fourth Stop - Blue Line, Yellow Line";
+        String actualFewestStops = routeService.getIntersection(routes);
     }
 }

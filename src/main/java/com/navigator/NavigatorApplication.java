@@ -35,8 +35,13 @@ public class NavigatorApplication {
 	}
 
 	@GetMapping("/1")
-	public String questionOne(@RequestParam(value = "name", defaultValue = "World") String name) {
+	public String questionOne() {
 		String inventory = routeService.getRouteInventory(routes);
 		return inventory;
+	}
+
+	@GetMapping("/2")
+	public String questionTwo() {
+		return "How about this?";
 	}
 }
