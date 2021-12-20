@@ -2,6 +2,8 @@ package com.navigator;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import com.navigator.entities.Route;
 import com.navigator.services.RouteService;
 
@@ -19,13 +21,22 @@ public class NavigatorApplication {
 	@Autowired
 	RouteService routeService;
 
+	List<Route> routes;
+
 	public static void main(String[] args) {
 		SpringApplication.run(NavigatorApplication.class, args);
+		
+		
 	}
 
-	@GetMapping("/info")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		List<Route> routes = routeService.getRoutes();
-		return String.format("Hello %s!", "body");
+	@PostConstruct
+	public void setup(){
+		routes = routeService.getRoutes();
+	}
+
+	@GetMapping("/1")
+	public String questionOne(@RequestParam(value = "name", defaultValue = "World") String name) {
+		String inventory = routeService.getRouteInventory(routes);
+		return inventory;
 	}
 }

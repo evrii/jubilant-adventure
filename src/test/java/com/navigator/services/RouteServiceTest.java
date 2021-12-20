@@ -119,18 +119,18 @@ public class RouteServiceTest {
         assertEquals(routes.get(2).getLongName(),"Olive Line");
     }
 
-    @Test
-    void testThatGetRoutesReturnsTheCorrectListOfRoutes(){
-        when(restTemplate.getForObject(anyString(), any())).thenReturn(routesJsonString);
-        List<Route> routes = routeService.getRoutes();
-        assertEquals(routes.size(),3);
-        assertEquals(routes.get(0).getId(),"Purple");
-        assertEquals(routes.get(0).getLongName(),"Purple Line");
-        assertEquals(routes.get(1).getId(),"Pink");
-        assertEquals(routes.get(1).getLongName(),"Pink Line");
-        assertEquals(routes.get(2).getId(),"Olive");
-        assertEquals(routes.get(2).getLongName(),"Olive Line");
-    }
+    // @Test
+    // void testThatGetRoutesReturnsTheCorrectListOfRoutes(){
+    //     when(restTemplate.getForObject(anyString(), any())).thenReturn(routesJsonString);
+    //     List<Route> routes = routeService.getRoutes();
+    //     assertEquals(routes.size(),3);
+    //     assertEquals(routes.get(0).getId(),"Purple");
+    //     assertEquals(routes.get(0).getLongName(),"Purple Line");
+    //     assertEquals(routes.get(1).getId(),"Pink");
+    //     assertEquals(routes.get(1).getLongName(),"Pink Line");
+    //     assertEquals(routes.get(2).getId(),"Olive");
+    //     assertEquals(routes.get(2).getLongName(),"Olive Line");
+    // }
 
     @Test
     void testGetRouteInventory(){
@@ -139,7 +139,7 @@ public class RouteServiceTest {
         routes.add(new Route("Blue", "Blue Line"));
         routes.add(new Route("Yellow", "Yellow Line"));
         String routeInventory = routeService.getRouteInventory(routes);
-        String expectedRouteInventory = "Routes:\nRed Line\nBlue Line\nYellow Line";
+        String expectedRouteInventory = "<b>Routes:</b><br/>Red Line<br/>Blue Line<br/>Yellow Line";
         assertEquals(routeInventory,expectedRouteInventory);
     }
 }
